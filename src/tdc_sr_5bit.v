@@ -12,26 +12,35 @@ module tdc_sr_5bit(
   reg up,dwn;
   wire reset_trig;
 
-  // 1. Sequential PD: Generate UP,DWN & RESET
-  assign reset_trig = reset | up & dwn;
-  // 1.1. UP detection
-  always@(posedge clk_ref or posedge reset_trig) begin  
-    if(reset_trig) begin
-      up <= 0; 
+      //-------------------------------------------------------------
+    // 1. Generate synchronous reset_trig based on UP & DWN signals
+    //-------------------------------------------------------------
+    always @(posedge clk or posedge reset) begin
+        if (reset)
+            reset_trig <= 1'b1;
+        else
+            reset_trig <= up & dwn;  // Reset when both UP and DWN are asserted
     end
-    else begin
-      up <=1'b1 & start;
+
+    //-------------------------------------------------------------
+    // 2. UP detection (sequential PD)
+    //-------------------------------------------------------------
+    always @(posedge clk_ref or posedge reset_trig) begin
+        if (reset_trig)
+            up <= 1'b0;
+        else
+            up <= start;  // Equivalent to 1'b1 & start
     end
-  end
-  // 1.2. DWN detection
-  always@(posedge fb_clk or posedge reset_trig) begin  
-    if(reset_trig) begin
-      dwn <= 0; 
+
+    //-------------------------------------------------------------
+    // 3. DWN detection (sequential PD)
+    //-------------------------------------------------------------
+    always @(posedge fb_clk or posedge reset_trig) begin
+        if (reset_trig)
+            dwn <= 1'b0;
+        else
+            dwn <= start;
     end
-    else begin
-      dwn <=1'b1 & start;
-    end
-  end
 
   // 2. TDC Blocks : Convert UP & DWN to thermometer codes 
   always@(posedge clk or posedge reset_trig) begin
@@ -56,5 +65,6 @@ module tdc_sr_5bit(
     else 
       start <= 1'b1;
   end
+
 
 endmodule
