@@ -10,7 +10,7 @@ module tdc_sr_5bit(
 
   reg start;
   reg up,dwn;
-  wire reset_trig;
+  reg reset_trig;
 
       //-------------------------------------------------------------
     // 1. Generate synchronous reset_trig based on UP & DWN signals
@@ -65,4 +65,5 @@ module tdc_sr_5bit(
 
 
 endmodule
+
 
