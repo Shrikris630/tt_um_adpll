@@ -15,10 +15,7 @@ module tdc_sr_5bit(
       //-------------------------------------------------------------
     // 1. Generate synchronous reset_trig based on UP & DWN signals
     //-------------------------------------------------------------
-    always @(posedge clk or posedge reset) begin
-        if (reset)
-            reset_trig <= 1'b1;
-        else
+  always @(posedge up or posedge dwn) begin
             reset_trig <= up & dwn;  // Reset when both UP and DWN are asserted
     end
 
@@ -68,3 +65,4 @@ module tdc_sr_5bit(
 
 
 endmodule
+
