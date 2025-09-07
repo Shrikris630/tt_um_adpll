@@ -38,14 +38,14 @@ module dco_5bit(
   always @(posedge clk or posedge reset) begin
     if (reset) begin
       dco_clk <= 1'b0;
-      counter <= 32'd0;
+      counter <= 16'd0;
     end else begin
       // 6.1. Compare the counter data with threshold
       if (counter >= thresh) begin
         // 6.2. Flip the DCO output when threshold is crossed
         dco_clk <= ~dco_clk;               
         // 6.3. Reset counter to offset
-        counter <= {27'd0, dco_offset};    
+        counter <= {11'd0, dco_offset};    
       end else begin
         // 6.4. Increment counter otherwise
         counter <= counter + 1;            
@@ -56,5 +56,6 @@ module dco_5bit(
  
 
 endmodule
+
 
 
