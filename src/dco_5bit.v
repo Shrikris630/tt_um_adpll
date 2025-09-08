@@ -17,7 +17,7 @@ module dco_5bit(
   wire [4:0] thresh_buf, thresh_buf2;
   wire thresh_sign;
   wire [4:0] phase;             
-  reg [31:0] counter;           
+  reg [15:0] counter;           
 
   // 1. Buffer the control input for reset logic
   assign ctrl_buf = (reset) ? 5'd0 : ctrl;
@@ -56,6 +56,7 @@ module dco_5bit(
  
 
 endmodule
+
 
 
 
