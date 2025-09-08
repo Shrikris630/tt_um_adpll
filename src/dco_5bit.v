@@ -17,7 +17,7 @@ module dco_5bit(
   wire [4:0] thresh_buf, thresh_buf2;
   wire thresh_sign;
   wire [4:0] phase;             
-  reg [15:0] counter;           
+  reg [4:0] counter;           
 
   // 1. Buffer the control input for reset logic
   assign ctrl_buf = (reset) ? 5'd0 : ctrl;
@@ -38,14 +38,14 @@ module dco_5bit(
   always @(posedge clk or posedge reset) begin
     if (reset) begin
       dco_clk <= 1'b0;
-      counter <= 16'd0;
+      counter <= 5'd0;
     end else begin
       // 6.1. Compare the counter data with threshold
       if (counter >= thresh) begin
         // 6.2. Flip the DCO output when threshold is crossed
         dco_clk <= ~dco_clk;               
         // 6.3. Reset counter to offset
-        counter <= {11'd0, dco_offset};    
+        counter <= dco_offset;    
       end else begin
         // 6.4. Increment counter otherwise
         counter <= counter + 1;            
@@ -56,6 +56,7 @@ module dco_5bit(
  
 
 endmodule
+
 
 
 
