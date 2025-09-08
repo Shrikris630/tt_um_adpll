@@ -6,7 +6,7 @@ module freq_divider_5bit(
   output reg freq_div_out);
   
   wire [3:0] thresh;
-  reg [31:0] counter;
+  reg [15:0] counter;
   
  
  // 1. Left shift ndiv considering half the time-period
@@ -32,4 +32,5 @@ module freq_divider_5bit(
     end
   end   
 endmodule  
+
 
