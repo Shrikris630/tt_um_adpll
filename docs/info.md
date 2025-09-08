@@ -8,7 +8,7 @@ You can also include images in this folder and reference them in the markdown. E
 -->
 
 ## How it works
-Works at 2MHz using 50MHz clock as a sampling clock. 
+Works at 2MHz using 50MHz clock as a sampling clock. However, it is programmable based on the inputs given
 
 ## How to test
 Step the frequency 2MHz by 0.5MHz and measure the lock time. Also measure the jitter present in 2MHz output
