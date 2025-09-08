@@ -6,7 +6,7 @@ module freq_divider_5bit(
   output reg freq_div_out);
   
   wire [3:0] thresh;
-  reg [15:0] counter;
+  reg [3:0] counter;
   
  
  // 1. Left shift ndiv considering half the time-period
@@ -14,7 +14,7 @@ module freq_divider_5bit(
   
   always@(posedge clk or posedge reset ) begin
     if(reset) begin
-      counter <= 16'd0;
+      counter <= 4'd0;
       freq_div_out <= 0;
     end
     else begin
@@ -23,7 +23,7 @@ module freq_divider_5bit(
         // 3. Toggle frequency divider output if counter >= threshold
         freq_div_out <= ~freq_div_out;
         // 4. Reset the counter if counter >= threshold
-        counter <= 16'd0;
+        counter <= 4'd0;
       end
       else begin
         // 6. Increment counter if not true
@@ -32,5 +32,6 @@ module freq_divider_5bit(
     end
   end   
 endmodule  
+
 
 
